@@ -1,3 +1,5 @@
+// Final version
+
 const fs = require("fs"); 
 
 // HELPER: to convert "hh:mm:ss am/pm" to total seconds
