@@ -284,22 +284,19 @@ function countBonusPerMonth(textFile, driverID, month) {
 // Returns: string formatted as hhh:mm:ss
 // ============================================================
 function getTotalActiveHoursPerMonth(textFile, driverID, month) {
-  const shifts = readShifts(textFile);
-  const targetMonth = parseInt(month, 10);
+  let shifts = readShifts(textFile);
+  let targetMonth = parseInt(month);
+  let totalSec = 0;
 
-  const relevant = shifts.filter((s) => {
-    const shiftMonth = parseInt(s.date.split("-")[1], 10);
-    return s.driverID === driverID && shiftMonth === targetMonth;
-  });
-
-  const totalSec = relevant.reduce(
-    (acc, s) => acc + durationToSeconds(s.activeTime),
-    0
-  );
+  for (let i = 0; i < shifts.length; i++) {
+    let shiftMonth = parseInt(shifts[i].date.split("-")[1]);
+    if (shifts[i].driverID === driverID && shiftMonth === targetMonth) {
+      totalSec = totalSec + durationToSeconds(shifts[i].activeTime);
+    }
+  }
 
   return secondsToLongDuration(totalSec);
 }
-
 // HELPER: read driverRates.txt
 // Returns array of { driverID, dayOff, basePay, tier }
 
