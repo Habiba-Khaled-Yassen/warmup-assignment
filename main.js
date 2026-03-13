@@ -1,4 +1,3 @@
-// Final version
 
 
 const fs = require("fs"); 
